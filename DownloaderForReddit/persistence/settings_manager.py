@@ -13,7 +13,8 @@ class SettingsManager:
 
     def __init__(self):
         self.logger = logging.getLogger(f'DownloaderForReddit.{__name__}')
-        self.config_file_path = os.path.join(system_util.get_data_directory(), 'config.toml')
+        self.config_file_path = os.path.join(
+            system_util.get_data_directory(), 'config.toml')
         self.config = None
         self.load_config_file()
         self.section_dict = {}
@@ -21,33 +22,51 @@ class SettingsManager:
         self.supported_videos_updated = None
 
         # region core
-        self.last_update = self.get('core', 'last_update', const.FIRST_POST_EPOCH)
+        self.last_update = self.get(
+            'core', 'last_update', const.FIRST_POST_EPOCH)
         self.current_user_list = self.get('core', 'current_user_list', None)
-        self.current_subreddit_list = self.get('core', 'current_subreddit_list', None)
+        self.current_subreddit_list = self.get(
+            'core', 'current_subreddit_list', None)
 
         base_path = os.path.expanduser('~').replace('\\', '/')
-        default_save_path = system_util.join_path(base_path, 'Downloads', 'RedditDownloads')
-        self.user_save_directory = self.get('core', 'user_save_directory', default_save_path)
-        self.subreddit_save_directory = self.get('core', 'subreddit_save_directory', default_save_path)
-        self.match_file_modified_to_post_date = self.get('core', 'match_file_modified_to_post_date', True)
-        self.rename_invalidated_download_folders = self.get('core', 'rename_invalidated_download_folders', True)
-        self.invalid_rename_format = self.get('core', 'invalid_rename_format', '%[dir_name](deleted)')
-        self.extraction_thread_count = self.get('core', 'extraction_thread_count', 4)
-        self.download_thread_count = self.get('core', 'download_thread_count', 4)
-        self.use_multi_part_downloader = self.get('core', 'use_multi_part_downloader', True)
-        self.multi_part_threshold = self.get('core', 'multi_part_threshold', 3 * 1024 * 1024)
-        self.multi_part_chunk_size = self.get('core', 'multi_part_chunk_size', 1024 * 1024)
-        self.multi_part_thread_count = self.get('core', 'multi_part_thread_count', 4)
+        default_save_path = system_util.join_path(
+            base_path, 'Downloads', 'RedditDownloads')
+        self.user_save_directory = self.get(
+            'core', 'user_save_directory', default_save_path)
+        self.subreddit_save_directory = self.get(
+            'core', 'subreddit_save_directory', default_save_path)
+        self.match_file_modified_to_post_date = self.get(
+            'core', 'match_file_modified_to_post_date', True)
+        self.rename_invalidated_download_folders = self.get(
+            'core', 'rename_invalidated_download_folders', True)
+        self.invalid_rename_format = self.get(
+            'core', 'invalid_rename_format', '%[dir_name](deleted)')
+        self.extraction_thread_count = self.get(
+            'core', 'extraction_thread_count', 4)
+        self.download_thread_count = self.get(
+            'core', 'download_thread_count', 4)
+        self.use_multi_part_downloader = self.get(
+            'core', 'use_multi_part_downloader', True)
+        self.multi_part_threshold = self.get(
+            'core', 'multi_part_threshold', 3 * 1024 * 1024)
+        self.multi_part_chunk_size = self.get(
+            'core', 'multi_part_chunk_size', 1024 * 1024)
+        self.multi_part_thread_count = self.get(
+            'core', 'multi_part_thread_count', 4)
         self.download_on_add = self.get('core', 'download_on_add', False)
         self.finish_incomplete_extractions_at_session_start = \
-            self.get('core', 'finish_incomplete_extractions_at_session_start', False)
+            self.get(
+                'core', 'finish_incomplete_extractions_at_session_start', False)
         self.finish_incomplete_downloads_at_session_start = \
             self.get('core', 'finish_incomplete_downloads_at_session_start', False)
-        self.download_reddit_hosted_videos = self.get('download_defaults', 'download_reddit_hosted_videos', True)
+        self.download_reddit_hosted_videos = self.get(
+            'download_defaults', 'download_reddit_hosted_videos', True)
 
         self.perpetual_download = self.get('core', 'perpetual_download', False)
-        self.cascade_list_changes = self.get('core', 'cascade_list_changes', False)
-        self.reddit_access_token = self.get('core', 'reddit_access_token', None)
+        self.cascade_list_changes = self.get(
+            'core', 'cascade_list_changes', False)
+        self.reddit_access_token = self.get(
+            'core', 'reddit_access_token', None)
         self.reddit_access = self.get('core', 'reddit_access', None)
         # endregion
 
@@ -132,13 +151,17 @@ class SettingsManager:
         self.error_color = self.get('output', 'error_color', [255, 125, 0])
         self.critical_color = self.get('output', 'critical_color', [255, 0, 0])
         self.requested_color = self.get('output', 'requested_color', [0, 0, 0])
-        self.show_priority_level = self.get('output', 'show_priority_level', True)
-        self.clear_messages_on_run = self.get('output', 'clear_messages_on_run', True)
-        self.output_saved_content_full_path = self.get('output', 'output_saved_content_full_path', False)
+        self.show_priority_level = self.get(
+            'output', 'show_priority_level', True)
+        self.clear_messages_on_run = self.get(
+            'output', 'clear_messages_on_run', True)
+        self.output_saved_content_full_path = self.get(
+            'output', 'output_saved_content_full_path', False)
         # endregion
 
         # region Display Settings
-        self.short_title_char_length = self.get('display', 'short_title_char_length', 15)
+        self.short_title_char_length = self.get(
+            'display', 'short_title_char_length', 15)
         default_tooltip_display_dict = {
             'name': True,
             'download_enabled': True,
@@ -162,43 +185,67 @@ class SettingsManager:
         }
         self.main_window_tooltip_display_dict = self.get('display', 'main_window_tooltip_display_dict',
                                                          default_tooltip_display_dict)
-        self.countdown_view_choices = ['DO_NOT_SHOW', 'ONLY_WHEN_ACTIVE', 'SHOW']
-        self.show_schedule_countdown = self.get('display', 'show_schedule_countdown', 'ONLY_WHEN_ACTIVE')
-        self.scroll_to_last_added = self.get('display', 'scroll_to_last_added', True)
-        self.colorize_new_reddit_objects = self.get('display', 'colorize_new_reddit_objects', True)
-        self.new_reddit_object_display_color = self.get('display', 'new_reddit_object_display_color', [0, 175, 0])
-        self.colorize_disabled_reddit_objects = self.get('display', 'colorize_disabled_reddit_objects', True)
+        self.countdown_view_choices = [
+            'DO_NOT_SHOW', 'ONLY_WHEN_ACTIVE', 'SHOW']
+        self.show_schedule_countdown = self.get(
+            'display', 'show_schedule_countdown', 'ONLY_WHEN_ACTIVE')
+        self.scroll_to_last_added = self.get(
+            'display', 'scroll_to_last_added', True)
+        self.colorize_new_reddit_objects = self.get(
+            'display', 'colorize_new_reddit_objects', True)
+        self.new_reddit_object_display_color = self.get(
+            'display', 'new_reddit_object_display_color', [0, 175, 0])
+        self.colorize_disabled_reddit_objects = self.get(
+            'display', 'colorize_disabled_reddit_objects', True)
         self.disabled_reddit_object_display_color = self.get('display', 'disabled_reddit_object_display_color',
                                                              [220, 0, 0])
-        self.colorize_inactive_reddit_objects = self.get('display', 'colorize_inactive_reddit_objects', True)
+        self.colorize_inactive_reddit_objects = self.get(
+            'display', 'colorize_inactive_reddit_objects', True)
         self.inactive_reddit_object_display_color = self.get('display', 'inactive_reddit_object_display_color',
                                                              [0, 0, 200])
-        self.datetime_display_format = self.get('display', 'datetime_display_format', '%m/%d/%Y %I:%M %p')
-        self.date_display_format = self.get('display', 'date_display_format', '%m/%d/%Y')
+        self.datetime_display_format = self.get(
+            'display', 'datetime_display_format', '%m/%d/%Y %I:%M %p')
+        self.date_display_format = self.get(
+            'display', 'date_display_format', '%m/%d/%Y')
         # endregion
 
         # region Database
-        self.download_session_query_limit = self.get('database', 'download_session_query_limit', 50)
-        self.reddit_object_query_limit = self.get('database', 'reddit_object_query_limit', 50)
+        self.download_session_query_limit = self.get(
+            'database', 'download_session_query_limit', 50)
+        self.reddit_object_query_limit = self.get(
+            'database', 'reddit_object_query_limit', 50)
         self.post_query_limit = self.get('database', 'post_query_limit', 50)
-        self.content_query_limit = self.get('database', 'content_query_limit', 10)
-        self.comment_query_limit = self.get('database', 'comment_query_limit', 60)
+        self.content_query_limit = self.get(
+            'database', 'content_query_limit', 10)
+        self.comment_query_limit = self.get(
+            'database', 'comment_query_limit', 60)
         # endregion
 
         # region Notification Defaults
-        self.update_notification_level = self.get('notification_defaults', 'update_notification_level', 0)
-        self.ignore_update = self.get('notification_defaults', 'ignore_update', None)
-        self.auto_display_failed_downloads = self.get('notification_defaults', 'auto_display_failed_downloads', True)
-        self.display_ffmpeg_warning = self.get('notification_defaults', 'display_ffmpeg_warning', True)
-        self.large_post_update_warning = self.get('notification_defaults', 'large_post_update_warning', True)
-        self.remove_reddit_object_warning = self.get('notification_defaults', 'remove_reddit_object_warning', True)
+        self.update_notification_level = self.get(
+            'notification_defaults', 'update_notification_level', 0)
+        self.ignore_update = self.get(
+            'notification_defaults', 'ignore_update', None)
+        self.auto_display_failed_downloads = self.get(
+            'notification_defaults', 'auto_display_failed_downloads', True)
+        self.display_ffmpeg_warning = self.get(
+            'notification_defaults', 'display_ffmpeg_warning', True)
+        self.large_post_update_warning = self.get(
+            'notification_defaults', 'large_post_update_warning', True)
+        self.remove_reddit_object_warning = self.get(
+            'notification_defaults', 'remove_reddit_object_warning', True)
         self.remove_reddit_object_list_warning = self.get('notification_defaults', 'remove_reddit_object_list_warning',
                                                           True)
-        self.ask_to_sync_moved_ro_settings = self.get('notification_defaults', 'ask_to_sync_moved_ro_settings', True)
-        self.check_existing_reddit_objects = self.get('notification_defaults', 'check_existing_reddit_objects', True)
-        self.show_system_tray_icon = self.get('notification_defaults', 'show_system_tray_icon', True)
-        self.show_system_tray_notifications = self.get('notification_defaults', 'show_system_tray_notifications', True)
-        self.tray_icon_message_display_length = self.get('notification_defaults', 'tray_icon_message_display_length', 6)
+        self.ask_to_sync_moved_ro_settings = self.get(
+            'notification_defaults', 'ask_to_sync_moved_ro_settings', True)
+        self.check_existing_reddit_objects = self.get(
+            'notification_defaults', 'check_existing_reddit_objects', True)
+        self.show_system_tray_icon = self.get(
+            'notification_defaults', 'show_system_tray_icon', True)
+        self.show_system_tray_notifications = self.get(
+            'notification_defaults', 'show_system_tray_notifications', True)
+        self.tray_icon_message_display_length = self.get(
+            'notification_defaults', 'tray_icon_message_display_length', 6)
         # endregion
 
         # region Imgur
@@ -214,11 +261,16 @@ class SettingsManager:
             'x': 0,
             'y': 0
         }
-        self.main_window_geom = self.get('main_window_gui', 'main_window_geom', main_window_geom)
-        self.horizontal_splitter_state = self.get('main_window_gui', 'horizontal_splitter_state', [228, 258, 624])
-        self.list_order_method = self.get('main_window_gui', 'list_order_method', 'name')
-        self.order_list_desc = self.get('main_window_gui', 'order_list_desc', False)
-        self.download_radio_state = self.get('main_window_gui', 'download_radio_state', 'USER')
+        self.main_window_geom = self.get(
+            'main_window_gui', 'main_window_geom', main_window_geom)
+        self.horizontal_splitter_state = self.get(
+            'main_window_gui', 'horizontal_splitter_state', [228, 258, 624])
+        self.list_order_method = self.get(
+            'main_window_gui', 'list_order_method', 'name')
+        self.order_list_desc = self.get(
+            'main_window_gui', 'order_list_desc', False)
+        self.download_radio_state = self.get(
+            'main_window_gui', 'download_radio_state', 'USER')
         # endregion
 
         # region Reddit Object Settings Dialog
@@ -244,47 +296,64 @@ class SettingsManager:
         }
         self.database_view_geom = self.get('database_view', 'database_view_geom',
                                            database_view_geom)
-        self.database_view_focus_model = self.get('download_view', 'database_view_focus_model', 'REDDIT_OBJECT')
+        self.database_view_focus_model = self.get(
+            'download_view', 'database_view_focus_model', 'REDDIT_OBJECT')
         self.database_view_show_download_sessions = self.get('database_view', 'database_view_show_download_sessions',
                                                              True)
         self.database_view_show_reddit_objects = self.get('database_view',
                                                           'database_view_show_reddit_objects', True)
-        self.database_view_show_posts = self.get('database_view', 'database_view_show_posts', True)
-        self.database_view_show_content = self.get('database_view', 'database_view_show_content', True)
-        self.database_view_show_comments = self.get('database_view', 'database_view_show_comments', True)
+        self.database_view_show_posts = self.get(
+            'database_view', 'database_view_show_posts', True)
+        self.database_view_show_content = self.get(
+            'database_view', 'database_view_show_content', True)
+        self.database_view_show_comments = self.get(
+            'database_view', 'database_view_show_comments', True)
         self.database_view_splitter_position = self.get('database_view', 'database_view_splitter_position',
                                                         [330, 330, 330, 330, 330])
         self.database_view_download_session_widget_width = self.get('database_view',
                                                                     'database_view_download_session_widget_width', 328)
         self.database_view_reddit_object_widget_width = self.get('database_view',
                                                                  'database_view_reddit_object_widget_width', 328)
-        self.database_view_post_widget_width = self.get('database_view', 'database_view_post_widget_width', 328)
-        self.database_view_content_widget_width = self.get('database_view', 'database_view_content_widget_width', 328)
-        self.database_view_comment_widget_width = self.get('database_view', 'database_view_comment_widget_width', 328)
-        self.database_view_post_text_font = self.get('database_view', 'database_view_post_text_font', 'Times')
+        self.database_view_post_widget_width = self.get(
+            'database_view', 'database_view_post_widget_width', 328)
+        self.database_view_content_widget_width = self.get(
+            'database_view', 'database_view_content_widget_width', 328)
+        self.database_view_comment_widget_width = self.get(
+            'database_view', 'database_view_comment_widget_width', 328)
+        self.database_view_post_text_font = self.get(
+            'database_view', 'database_view_post_text_font', 'Times')
         self.database_view_post_text_font_size = self.get('database_view', 'database_view_post_text_font_size',
                                                           10)
-        self.database_view_icon_size = self.get('database_view', 'database_view_icon_size', 250)
+        self.database_view_icon_size = self.get(
+            'database_view', 'database_view_icon_size', 250)
 
         self.database_view_download_session_order = self.get('database_view', 'database_view_download_session_order',
                                                              'id')
         self.database_view_download_session_desc_order = self.get('database_view',
                                                                   'database_view_download_session_desc_order', False)
-        self.database_view_reddit_object_order = self.get('database_view', 'database_view_reddit_object_order', 'name')
+        self.database_view_reddit_object_order = self.get(
+            'database_view', 'database_view_reddit_object_order', 'name')
         self.database_view_reddit_object_desc_order = self.get('databae_view', 'database_view_reddit_object_desc_order',
                                                                False)
-        self.database_view_post_order = self.get('database_view', 'database_view_post_order', 'title')
-        self.database_view_post_desc_order = self.get('database_view', 'database_view_post_desc_order', False)
-        self.database_view_content_order = self.get('database_view', 'database_view_content_order', 'title')
-        self.database_view_content_desc_order = self.get('database_view', 'database_view_content_desc_order', False)
-        self.database_view_comment_order = self.get('database_view', 'database_view_comment_order', 'id')
-        self.database_view_comment_desc_order = self.get('database_view', 'database_view_comment_desc_order', False)
+        self.database_view_post_order = self.get(
+            'database_view', 'database_view_post_order', 'title')
+        self.database_view_post_desc_order = self.get(
+            'database_view', 'database_view_post_desc_order', False)
+        self.database_view_content_order = self.get(
+            'database_view', 'database_view_content_order', 'title')
+        self.database_view_content_desc_order = self.get(
+            'database_view', 'database_view_content_desc_order', False)
+        self.database_view_comment_order = self.get(
+            'database_view', 'database_view_comment_order', 'id')
+        self.database_view_comment_desc_order = self.get(
+            'database_view', 'database_view_comment_desc_order', False)
 
         self.database_view_download_session_infinite_scroll = self.get(
             'database_view', 'database_view_download_session_infinite_scroll', False)
         self.database_view_reddit_object_infinite_scroll = self.get(
             'database_view', 'database_view_reddit_object_infinite_scroll', False)
-        self.database_view_post_infinite_scroll = self.get('database_view', 'database_view_post_infinite_scroll', False)
+        self.database_view_post_infinite_scroll = self.get(
+            'database_view', 'database_view_post_infinite_scroll', False)
         self.database_view_content_infinite_scroll = self.get(
             'database_view', 'database_view_content_infinite_scroll', False)
         self.database_view_comment_infinite_scroll = self.get(
@@ -323,46 +392,60 @@ class SettingsManager:
                                                            self.default_database_view_comment_headers)
         default_quick_filters = {
             'Download Sessions With Activity': [
-                {'model': 'DOWNLOAD_SESSION', 'field': 'total_activity_count', 'operator': 'gt', 'value': 0}
+                {'model': 'DOWNLOAD_SESSION', 'field': 'total_activity_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Download Sessions With Posts': [
-                {'model': 'DOWNLOAD_SESSION', 'field': 'content_count', 'operator': 'gt', 'value': 0}
+                {'model': 'DOWNLOAD_SESSION', 'field': 'content_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Download Sessions With Content': [
-                {'model': 'DOWNLOAD_SESSION', 'field': 'content_count', 'operator': 'gt', 'value': 0}
+                {'model': 'DOWNLOAD_SESSION', 'field': 'content_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Download Sessions With Comments': [
-                {'model': 'DOWNLOAD_SESSION', 'field': 'comment_count', 'operator': 'gt', 'value': 0}
+                {'model': 'DOWNLOAD_SESSION', 'field': 'comment_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Significant Reddit Objects Only': [
-                {'model': 'REDDIT_OBJECT', 'field': 'significant', 'operator': 'eq', 'value': True}
+                {'model': 'REDDIT_OBJECT', 'field': 'significant',
+                    'operator': 'eq', 'value': True}
             ],
             'Non Significant Reddit Objects Only': [
-                {'model': 'REDDIT_OBJECT', 'field': 'significant', 'operator': 'eq', 'value': False}
+                {'model': 'REDDIT_OBJECT', 'field': 'significant',
+                    'operator': 'eq', 'value': False}
             ],
             'Currently Used Reddit Objects Only': [
-                {'model': 'REDDIT_OBJECT', 'field': 'list_count', 'operator': 'gt', 'value': 0}
+                {'model': 'REDDIT_OBJECT', 'field': 'list_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Currently Non-Used Reddit Objects Only': [
-                {'model': 'REDDIT_OBJECT', 'field': 'list_count', 'operator': 'lte', 'value': 0}
+                {'model': 'REDDIT_OBJECT', 'field': 'list_count',
+                    'operator': 'lte', 'value': 0}
             ],
             'Self Posts Only': [
-                {'model': 'POST', 'field': 'is_self', 'operator': 'eq', 'value': True}
+                {'model': 'POST', 'field': 'is_self',
+                    'operator': 'eq', 'value': True}
             ],
             'No Self Posts': [
-                {'model': 'POST', 'field': 'is_self', 'operator': 'eq', 'value': False}
+                {'model': 'POST', 'field': 'is_self',
+                    'operator': 'eq', 'value': False}
             ],
             'Content From Posts Only': [
-                {'model': 'CONTENT', 'field': 'comment_id', 'operator': 'eq', 'value': None}
+                {'model': 'CONTENT', 'field': 'comment_id',
+                    'operator': 'eq', 'value': None}
             ],
             'Content From Comments Only': [
-                {'model': 'CONTENT', 'field': 'comment_id', 'operator': 'not', 'value': None}
+                {'model': 'CONTENT', 'field': 'comment_id',
+                    'operator': 'not', 'value': None}
             ],
             'Comments With Content': [
-                {'model': 'COMMENT', 'field': 'content_count', 'operator': 'gt', 'value': 0}
+                {'model': 'COMMENT', 'field': 'content_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Comments Without Content': [
-                {'model': 'COMMENT', 'field': 'content_count', 'operator': 'lte', 'value': 0}
+                {'model': 'COMMENT', 'field': 'content_count',
+                    'operator': 'lte', 'value': 0}
             ],
         }
         self.database_view_quick_filters = self.get('database_view', 'database_view_quick_filters',
@@ -370,13 +453,16 @@ class SettingsManager:
 
         default_database_view_default_filters = {
             'Database View': [
-                {'model': 'REDDIT_OBJECT', 'field': 'significant', 'operator': 'eq', 'value': True}
+                {'model': 'REDDIT_OBJECT', 'field': 'significant',
+                    'operator': 'eq', 'value': True}
             ],
             'Download Session View': [
-                {'model': 'DOWNLOAD_SESSION', 'field': 'total_activity_count', 'operator': 'gt', 'value': 0}
+                {'model': 'DOWNLOAD_SESSION', 'field': 'total_activity_count',
+                    'operator': 'gt', 'value': 0}
             ],
             'Reddit Object View': [
-                {'model': 'REDDIT_OBJECT', 'field': 'significant', 'operator': 'eq', 'value': True}
+                {'model': 'REDDIT_OBJECT', 'field': 'significant',
+                    'operator': 'eq', 'value': True}
             ],
             'Post View': [],
             'Content View': [],
@@ -389,15 +475,18 @@ class SettingsManager:
         # endregion
 
         # region Export
-        self.export_file_path = self.get('export', 'export_file_path', self.user_save_directory)
+        self.export_file_path = self.get(
+            'export', 'export_file_path', self.user_save_directory)
         self.export_file_type = self.get('export', 'export_file_type', 'JSON')
-        self.export_nested_objects = self.get('export', 'export_nested_objects', False)
+        self.export_nested_objects = self.get(
+            'export', 'export_nested_objects', False)
         # endregion
 
         # region Misc Dialogs
         self.settings_dialog_geom = self.get('misc_dialogs', 'settings_dialog_geom',
                                              {'width': 1169, 'height': 820, 'x': 0, 'y': 0})
-        self.database_statistics_geom = self.get('misc_dialogs', 'database_statistics_geom', None)
+        self.database_statistics_geom = self.get(
+            'misc_dialogs', 'database_statistics_geom', None)
         # endregion
 
     def load_config_file(self):

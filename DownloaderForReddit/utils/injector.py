@@ -24,17 +24,27 @@ along with Downloader for Reddit.  If not, see <http://www.gnu.org/licenses/>.
 from queue import Queue
 
 settings_manager = None
+client_settings_manager = None
+server_settings_manager = None
 database_handler = None
 message_queue = None
 scheduler = None
 
 
+def get_client_settings_manager():
+    global client_settings_manager
+    if client_settings_manager is None:
+        from ..persistence.client_settings_manager import ClientSettingsManager
+
+
+def get_server_settings_manager():
+    global server_settings_manager
+    if server_settings_manager is None:
+        from ..persistence.server_settings_manager import ServerSettingsManager
+
+
 def get_settings_manager():
-    global settings_manager
-    if settings_manager is None:
-        from ..persistence.settings_manager import SettingsManager
-        settings_manager = SettingsManager()
-    return settings_manager
+    print("This needs to be removed.")
 
 
 def get_database_handler():
